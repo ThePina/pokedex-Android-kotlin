@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +27,7 @@ class PokemonListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PokemonItemListAdapter
     private val pokemonRepository = PokemonRepository()
-    private lateinit var progressBar: ProgressBar
+    private lateinit var progressBarLayout: FrameLayout
     private lateinit var editTextSearch: EditText
     private var originalPokemonList: List<PokemonListItemResponse> = mutableListOf()
 
@@ -39,7 +40,7 @@ class PokemonListFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_pokemon_list, container, false)
         recyclerView = view.findViewById(R.id.reciclerViewPokemon)
-        progressBar=view.findViewById<ProgressBar>(R.id.progressBar)
+        progressBarLayout=view.findViewById(R.id.progressBarLayout)
         editTextSearch=view.findViewById<EditText>(R.id.editTextSearch)
         return view
     }
@@ -61,7 +62,7 @@ class PokemonListFragment : Fragment() {
                 val pokemonList = pokemonListResponse
                 originalPokemonList = pokemonList
 
-                progressBar.visibility=View.GONE
+                progressBarLayout.visibility=View.GONE
                 adapter.updateData(pokemonList)
 
 

@@ -50,12 +50,15 @@ class PokemonRepository(): PokemonRepositoryInterface {
                     val speciesUrl = pokemonResponse?.species?.url ?: ""
 
                     val typesList = pokemonResponse?.types?.map { it.type.name }
-
+                    val weight=pokemonResponse?.weight ?: ""
+                    val height=pokemonResponse?.height ?: ""
                     PokemonDetail(
                         name = pokemonResponse?.name ?: "",
                         sprites = sprite,
                         species = speciesUrl,
-                        types = typesList
+                        types = typesList,
+                        weight =weight ,
+                        height =height
                     )
                 } else {
 

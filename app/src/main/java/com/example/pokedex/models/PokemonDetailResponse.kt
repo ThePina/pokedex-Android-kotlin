@@ -6,7 +6,9 @@ data class PokemonDetailResponse(
     val name: String,
     val sprites: Sprites,
     val species: Species,
-    val types: List<Type>
+    val types: List<Type>,
+    val height:String,
+    val weight: String
 
 )
 data class Sprites(

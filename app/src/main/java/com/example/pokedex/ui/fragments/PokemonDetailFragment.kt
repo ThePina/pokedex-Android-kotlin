@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -22,14 +23,18 @@ import com.bumptech.glide.request.RequestOptions
 class PokemonDetailFragment : Fragment() {
     private lateinit var name: TextView
     private lateinit var types: TextView
+    private lateinit var weight: TextView
+    private lateinit var height: TextView
+
+    private lateinit var progressLayout:FrameLayout
 
     private lateinit var image: ImageView
     private var pokemon: String? = null
     private val pokemonRepository = PokemonRepository()
 
     val requestOptions = RequestOptions()
-        .diskCacheStrategy(DiskCacheStrategy.ALL) // Opciones de almacenamiento en caché
-        .centerCrop() // Escala la imagen para que se ajuste al ImageView
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .centerCrop()
 
 
     override fun onCreateView(
@@ -41,6 +46,9 @@ class PokemonDetailFragment : Fragment() {
         name=view.findViewById(R.id.namePokemon)
         image=view.findViewById(R.id.imageView)
         types=view.findViewById(R.id.types)
+        weight=view.findViewById(R.id.weight)
+        height=view.findViewById(R.id.height)
+        progressLayout=view.findViewById(R.id.progressBarLayout)
 
 
 
@@ -60,10 +68,15 @@ class PokemonDetailFragment : Fragment() {
                     val listTypes = pokemonData.types?.joinToString(separator = ", ") { it.toString()} ?: ""
 
                     types.setText(listTypes)
+                    weight.setText("Weight: "+pokemonData.weight)
+                    height.setText("Height: "+pokemonData.height)
                     Glide.with(view)
                         .load(pokemonData.sprites)
                         .apply(requestOptions)
                         .into(image)
+
+                    progressLayout.visibility=View.GONE
+
                 }
 
             } catch (e: Exception) {
