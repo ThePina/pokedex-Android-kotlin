@@ -41,5 +41,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2' // Versión compatible con nivel de API 24
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0' // Versión compatible con nivel de API 24
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'  // Versión compatible con API nivel 24
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'  // Versión compatible con API nivel 24
+
 
 }

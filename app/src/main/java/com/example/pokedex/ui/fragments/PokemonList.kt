@@ -12,11 +12,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedex.R
 import com.example.pokedex.adapter.PokemonItemListAdapter
 import com.example.pokedex.models.PokemonItemList
+import com.example.pokedex.repository.PokemonRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class PokemonList : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PokemonItemListAdapter
+    private val pokemonRepository = PokemonRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,31 +32,31 @@ class PokemonList : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_pokemon_list, container, false)
-
         recyclerView = view.findViewById(R.id.reciclerViewPokemon)
 
-
-
         return view
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
-        val pokemonList = mutableListOf(
-            PokemonItemList("Pikachu",""),
-            PokemonItemList("Charizard",""),
-            PokemonItemList("Bulbasaur",""),
-            PokemonItemList("Squirtle",""),
-            PokemonItemList("Mewtwo",""),
-        )
 
 
-        adapter = PokemonItemListAdapter(requireContext(), pokemonList)
+        adapter = PokemonItemListAdapter(requireContext(), mutableListOf())
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val pokemonListResponse = withContext(Dispatchers.IO) {
+                    pokemonRepository.getPokemonList()
+                }
+                val pokemonList = pokemonListResponse
+                adapter.updateData(pokemonList)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     companion object {
