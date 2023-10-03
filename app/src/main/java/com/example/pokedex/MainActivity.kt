@@ -2,10 +2,7 @@ package com.example.pokedex
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.WindowManager
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import com.example.pokedex.ui.PokemonList
+import com.example.pokedex.ui.fragments.PokemonList
 
 class MainActivity : AppCompatActivity() {
 
