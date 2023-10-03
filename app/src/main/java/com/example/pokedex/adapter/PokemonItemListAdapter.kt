@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedex.R
 import com.example.pokedex.models.PokemonListItemResponse
+import com.example.pokedex.ui.fragments.PokemonDetailFragment
 
 
 class PokemonItemListAdapter(private val context: Context, private var pokemonList: MutableList<PokemonListItemResponse>) :
@@ -19,6 +21,17 @@ class PokemonItemListAdapter(private val context: Context, private var pokemonLi
 
         fun bind(pokemon: PokemonListItemResponse) {
             txtPokemonName.text = pokemon.name
+
+            itemView.setOnClickListener{
+                val fragmentManager = (itemView.context as AppCompatActivity).supportFragmentManager
+                val newFragment = PokemonDetailFragment.newInstance(pokemon.name)
+
+                fragmentManager.beginTransaction()
+                    .replace(R.id.frame, newFragment)
+                    .addToBackStack(null)
+                    .commit()
+
+            }
 
 
 

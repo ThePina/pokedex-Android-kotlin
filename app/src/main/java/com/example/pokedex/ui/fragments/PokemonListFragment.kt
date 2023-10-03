@@ -5,13 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedex.R
 import com.example.pokedex.adapter.PokemonItemListAdapter
-import com.example.pokedex.models.PokemonItemList
 import com.example.pokedex.repository.PokemonRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -19,7 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class PokemonList : Fragment() {
+class PokemonListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PokemonItemListAdapter
     private val pokemonRepository = PokemonRepository()
@@ -66,6 +64,6 @@ class PokemonList : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = PokemonList()
+        fun newInstance() = PokemonListFragment()
     }
 }

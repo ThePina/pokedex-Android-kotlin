@@ -2,7 +2,7 @@ package com.example.pokedex
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.pokedex.ui.fragments.PokemonList
+import com.example.pokedex.ui.fragments.PokemonListFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // obtener fragment
-        val myFragment = PokemonList()
+        val myFragment = PokemonListFragment()
 
         val fragmentManager = supportFragmentManager
 
