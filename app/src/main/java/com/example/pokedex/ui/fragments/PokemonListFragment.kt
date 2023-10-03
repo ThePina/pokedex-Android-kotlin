@@ -53,6 +53,7 @@ class PokemonListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
+        //corrutina para obtener los datos del repositorio sin detener el hilo principal
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 val pokemonListResponse = withContext(Dispatchers.IO) {
@@ -63,6 +64,8 @@ class PokemonListFragment : Fragment() {
                 originalPokemonList = pokemonList
 
                 progressBarLayout.visibility=View.GONE
+
+                //actualizar reciclerView
                 adapter.updateData(pokemonList)
 
 
@@ -71,6 +74,7 @@ class PokemonListFragment : Fragment() {
             }
         }
 
+        //listener para escuchar el cuadro de busqueda
         editTextSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -78,6 +82,7 @@ class PokemonListFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
+                //si se detecta un cambio se filtraran los pokemon para mostrar solo los coincidentes
                 val query = s.toString().trim()
                 val filteredList = originalPokemonList.filter { pokemon ->
 

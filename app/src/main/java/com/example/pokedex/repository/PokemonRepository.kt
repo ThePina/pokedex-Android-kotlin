@@ -22,6 +22,7 @@ class PokemonRepository(): PokemonRepositoryInterface {
         api = retrofit.create(PokeApiService::class.java)
     }
 
+
     override suspend fun getPokemonList(): List<PokemonListItemResponse> {
         return withContext(Dispatchers.IO) {
             try {

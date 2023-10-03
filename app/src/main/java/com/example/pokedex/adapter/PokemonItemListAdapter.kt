@@ -22,19 +22,17 @@ class PokemonItemListAdapter(private val context: Context, private var pokemonLi
         fun bind(pokemon: PokemonListItemResponse) {
             txtPokemonName.text = pokemon.name
 
+            //listener para abrir pokemon detail
             itemView.setOnClickListener{
                 val fragmentManager = (itemView.context as AppCompatActivity).supportFragmentManager
                 val newFragment = PokemonDetailFragment.newInstance(pokemon.name)
 
+                //transaccion para mostrar fragmento de pokemon datail
                 fragmentManager.beginTransaction()
                     .replace(R.id.frame, newFragment)
                     .addToBackStack(null)
                     .commit()
-
             }
-
-
-
         }
     }
 
@@ -48,6 +46,7 @@ class PokemonItemListAdapter(private val context: Context, private var pokemonLi
         holder.bind(pokemon)
     }
 
+    //actualizar el reciclerView
     fun updateData(newPokemonList: List<PokemonListItemResponse>) {
         pokemonList.clear()
         pokemonList.addAll(newPokemonList)

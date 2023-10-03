@@ -32,6 +32,7 @@ class PokemonDetailFragment : Fragment() {
     private var pokemon: String? = null
     private val pokemonRepository = PokemonRepository()
 
+    //opciones de Glide
     val requestOptions = RequestOptions()
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .centerCrop()
@@ -57,6 +58,8 @@ class PokemonDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //corrutina para obtener los datos del repositorio sin detener el hilo principal
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 val pokemonData = withContext(Dispatchers.IO) {
@@ -70,6 +73,8 @@ class PokemonDetailFragment : Fragment() {
                     types.setText(listTypes)
                     weight.setText("Weight: "+pokemonData.weight)
                     height.setText("Height: "+pokemonData.height)
+
+                    // setear imagen segun url obtenida desde la api
                     Glide.with(view)
                         .load(pokemonData.sprites)
                         .apply(requestOptions)

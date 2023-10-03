@@ -1,10 +1,9 @@
-package com.example.pokedex.ui.fragments.modules
+package com.example.pokedex.ui.modules
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import com.example.pokedex.R
 import java.util.*
 
@@ -22,6 +21,7 @@ class ClockModule(context: Context) {
         return clockView
     }
 
+    //iniciar hilo cuando se inicie el reloj, y ejecutar la funcion update cada un segundo
     fun startClock() {
         if (!isClockRunning) {
             isClockRunning = true
@@ -40,10 +40,14 @@ class ClockModule(context: Context) {
             clockThread?.start()
         }
     }
+
+
     fun stopClock() {
         isClockRunning = false
         clockThread?.interrupt()
     }
+
+    //funcion encargarda de actualizar los valores visuales del reloj una vez por segundo
     private fun updateClock() {
         val currentTimeMillis = System.currentTimeMillis()
         val calendar = Calendar.getInstance()

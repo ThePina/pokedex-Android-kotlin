@@ -15,6 +15,7 @@ import retrofit2.http.Url
 interface PokeApiService {
     @GET("pokemon?limit=1292")
     fun getPokemonList(): Call<PokemonListResponse>
+
     @GET("pokemon/{pokemonName}")
     fun getPokemonByName(@Path("pokemonName") pokemonName: String): Call<PokemonDetailResponse>
 
