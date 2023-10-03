@@ -2,6 +2,7 @@ package com.example.pokedex
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.FrameLayout
 import com.example.pokedex.ui.fragments.PokemonListFragment
 import com.example.pokedex.ui.fragments.modules.ClockModule
@@ -22,6 +23,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //quitar focus del editText de busqueda
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
         // obtener fragment
         val myFragment = PokemonListFragment()
