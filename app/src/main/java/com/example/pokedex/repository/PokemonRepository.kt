@@ -1,6 +1,8 @@
 package com.example.pokedex.repository
 
 import com.example.pokedex.api.PokeApiService
+import com.example.pokedex.models.PokemonDetail
+import com.example.pokedex.models.PokemonDetailResponse
 import com.example.pokedex.models.PokemonItemList
 import com.example.pokedex.models.PokemonListItemResponse
 import kotlinx.coroutines.Dispatchers
@@ -20,8 +22,6 @@ class PokemonRepository(): PokemonRepositoryInterface {
         api = retrofit.create(PokeApiService::class.java)
     }
 
-
-
     override suspend fun getPokemonList(): List<PokemonListItemResponse> {
         return withContext(Dispatchers.IO) {
             try {
@@ -32,6 +32,34 @@ class PokemonRepository(): PokemonRepositoryInterface {
                     pokemonResponse?.results ?: emptyList()
                 } else {
                     throw Exception("Error")
+                }
+            } catch (e: Exception) {
+                throw e
+            }
+        }
+    }
+
+    override suspend fun getPokemonDetails(pokemonName: String): PokemonDetail {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = api.getPokemonByName(pokemonName).execute()
+                if (response.isSuccessful) {
+                    val pokemonResponse = response.body()
+
+                    val sprite= pokemonResponse?.sprites?.frontDefault?:""
+                    val speciesUrl = pokemonResponse?.species?.url ?: ""
+
+                    val typesList = pokemonResponse?.types?.map { it.type.name }
+
+                    PokemonDetail(
+                        name = pokemonResponse?.name ?: "",
+                        sprites = sprite,
+                        species = speciesUrl,
+                        types = typesList
+                    )
+                } else {
+
+                    throw Exception("Error al obtener los detalles del Pokémon")
                 }
             } catch (e: Exception) {
                 throw e
