@@ -23,6 +23,7 @@ class PokemonList : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PokemonItemListAdapter
     private val pokemonRepository = PokemonRepository()
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +34,7 @@ class PokemonList : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_pokemon_list, container, false)
         recyclerView = view.findViewById(R.id.reciclerViewPokemon)
+        progressBar=view.findViewById<ProgressBar>(R.id.progressBar)
 
         return view
     }
@@ -50,8 +52,11 @@ class PokemonList : Fragment() {
                 val pokemonListResponse = withContext(Dispatchers.IO) {
                     pokemonRepository.getPokemonList()
                 }
+
                 val pokemonList = pokemonListResponse
+                progressBar.visibility=View.GONE
                 adapter.updateData(pokemonList)
+
 
             } catch (e: Exception) {
                 e.printStackTrace()
